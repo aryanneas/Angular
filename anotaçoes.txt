@@ -1,0 +1,45 @@
+npApp: compila e entende as diretivas
+
+ngController: vinculando um elemento da view ao controller
+
+ngBind: substituindo o elemento por uma expressão
+
+ngRepeat: iteração sobre os itens de uma coleção ou de um objeto
+
+ng-model: vinculando uma propriedade ao $scope(faz o inverso do ngBind) - insiro nos inputs, selects e textareas; pego o quee está na view e trago para o $scope
+
+ngClick: atribuindo um comportamento ao evento
+
+ngDisable: desabilitando um elemento dinamicamnete(botão, input, etc)
+
+ngOptions: renderiza as opções de um select
+
+ngClass e ngStyle: aplicando classes CSS e estilos dinamicamente
+
+ngShow, ngHide, ngIf: exibindo um elemento condicionalmente
+*ngShow e ngHide trabalham apenas no controle da visibilidade do elemento;
+*ngIf interage com o DOM colocando e tirando o elemento selecionado; se há performance e que não faça sentido carregar de antimão, usar o ngIf, se for algo que não pase, usar ngHide e ngShow
+
+ngInclude: incluir connteúdo dinamicamente 
+
+ngRequired: define um determinado campo como obrigatório
+
+$valid e $invalid: consultando a validade de um campo ou formulário
+
+$prestine e $dirty: verificando se um formulário ou campo já foi utilizado alguma vez
+
+ngMinlenght e ngMaxlenght: define o tamanho mínimo e máximo permitido
+
+$error: consultando os erros de um campo ou formulário
+
+$ngPattern: define uma RegExp para validar o campo
+
+FILTROS::
+-Uppercase: transforma todas as letras em maiúculas
+-Lowrcase: transforma todas as letras em minúsculas
+-Date: formata uma data usando uma máscara; se nao passar parametros ele vem formatado com data e hora dos EUA
+-Filter: filtra um array com base em um critério; filter: criterioDeBusca {oQueQueroFiltrar: nomeDoMeuNgModel}
+-OrderBy: ordena um array com base em algum critério; orderBy: 'oQueEuQuero':true se for em ordem desc ou false para ordem asc
+-Currency: converte um número para moeda
+-Number: formata um número
+-limitTo: limita um array ou uma string 

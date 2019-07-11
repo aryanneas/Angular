@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-br" ng-app="helloWorld">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Aprendendo Angular</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+        <script>
+            //cria o modulo
+            //o [] faz a importação de novos modulos
+            angular.module("helloWorld", []); 
+            //localiza o modulo
+            //helloWorldCtrl = nome do meu controler
+            //dentro da função declaro o meu controler
+            //$scope faz o intermédio entre view e controler
+            angular.module("helloWorld").controller("helloWorldCtrl", function($scope){
+                $scope.msg = "Hello World!";
+            });   
+        </script>
+    </head>
+    <!--ng-controller é a minha view-->
+    <body ng-controller="helloWorldCtrl">
+        {{msg}}
+    </body>
+</html>

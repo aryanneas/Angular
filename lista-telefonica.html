@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-br" ng-app="listaTelefonica">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Lista Telefonica</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        
+        <style>
+            .jumbotron{
+                margin: 20px auto 0;
+                text-align: center;
+                width: 500px;
+            }
+            .table{
+                margin-top: 20px;
+            }
+            .form-control{
+                margin-bottom: 5px;
+            }
+            .selecionado{
+                background-color: yellow;
+            }
+            .negrito{
+                font-weight: bold
+            }
+        </style>
+
+        <script>
+            angular.module("listaTelefonica", [] );
+            angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function($scope){
+                $scope.exemploBind = "Lista Telefonica";
+                $scope.arrayContatos = [
+                    {nome: "Aryanne", telefone:"988567159", cor: 'blue'},
+                    {nome: "Rafael", telefone: "997201853", cor: 'red'},
+                    {nome: "Cida", telefone: "988121812", cor: 'pink'}
+                ];
+
+                $scope.operadoras  = [
+                    {nome:"Oi", codigo: 14, categoria: "Celular" },
+                    {nome:"Vivo", codigo: 15, categoria: "Celular" },
+                    {nome:"Tim", codigo: 41, categoria: "Celular" },
+                    {nome:"GVT", codigo: 25, categoria: "Fixo" },
+                    {nome:"Embratel", codigo: 21, categoria: "Fixo" }
+                ];
+                
+                $scope.addContato = function(contato){
+                    $scope.arrayContatos.push(angular.copy(contato));
+                    delete $scope.contato;
+                }
+                
+                $scope.minhaVariavel ="selecionado";
+                $scope.minhaVariavel2 = "negrito";
+
+                $scope.apagarContatos = function(arrayContatos){
+                    //filter me permite passar uma funcao que recebe um elemento(no caso o contato) e aí nesse contato eu analiso. eu só faço o return se o contato estiver selecionado
+                    //substituo o array original(arrayContatos) pelo resultado da filtragem dos não selecionados
+                    $scope.arrayContatos = arrayContatos.filter(function(contato){
+                        if(!contato.selecionado) return contato;
+                    });
+                }
+                $scope.isContatoSelecionado = function(arrayContatos){
+                    //some: de forma similar ao filter, vou olhar cada contato e retornar true se contato.selecionado; de todo o array, se um return for true, some é true
+                    return arrayContatos.some(function(arrayContatos){
+                        return contato.selecionado; 
+                    });
+                };
+            });
+        </script>
+    </head>
+    <body ng-controller="listaTelefonicaCtrl">
+        <div class="container">
+            <div class="jumbotron">
+                <!--funciona de 2 formas. Assim:
+                <h1 ng-bind="exemploBind"></h1> ou assim:-->
+                <h2>{{exemploBind}}</h2> 
+                <!--concatenação
+                <p>{{exemploBind + ' exemplo com concatenação'}}</p>
+                -->
+                <table class="table" ng-show="arrayContatos.length > 0">
+                    <tr>
+                        <th></th>
+                        <th>Nome</th>
+                        <th>Telefone</th>
+                        <th>Operadora</th>
+                        <th></th>
+                    </tr>
+                    <!-- se eu quiser add vários estilos a propriedades diferentes, é melhor usar um array com variáveis diferentes que são propriedades do meu $scope e nele posso defini-las como desejar: 
+
+                    <tr ng-class="[minhaVariavel, minhaVariavel2]" ng-repeat="contato in arrayContatos">
+                    -->
+                    <!--adicionando o ng-class de forma não dinâmica:
+                        <tr ng-class="minhaVariavel" ng-repeat="contato in arrayContatos">
+                    -->
+                    <!--a seguir, coloco um obj dentro do ng-class em que a classe selecionado e negrito só são colocadas quando contato.selecionado for igual a true-->
+                    <tr ng-class="{'selecionado negrito': contato.selecionado}" ng-repeat="contato in arrayContatos">
+                        <!--pode ser feito o ng-repeat de 2 formas. Assim:-->
+                        <td><input type="checkbox" ng-model="contato.selecionado" /></td>
+                        <td>{{contato.nome}}</td>
+                        <td>{{contato.telefone}}</td> 
+                        <td>{{contato.operadora.nome}}</td> 
+                        <td><div style="width: 50px; height: 50px;" ng-style="{'background-color':contato.cor}"></div></td>
+                        <!--ou assim:
+                        <td ng-repeat="(key,value) in contato">
+                            {{value}}
+                        </td>
+                        -->
+                    </tr>
+                </table>
+                <hr>
+                <input class="form-control" type="text" ng-model="contato.nome" placeholder="Nome:">
+                <input class="form-control" type="text" ng-model="contato.telefone" placeholder="Telefone:">
+                <select class="custom-select form-control" ng-model="contato.operadora" ng-options="operadora.nome for operadora in operadoras">
+                    <option value="" disabled>Selecione uma operadora</option>
+                </select>
+                <!-- se eu quisesse somente o cod da operadora:
+                    <select class="custom-select form-control" ng-model="contato.operadora" ng-options="operadora.codigo as operadora.nome for operadora in operadoras">
+                    <option value="" disabled>Selecione uma operadora</option>
+                    </select>
+                -->
+                 <!-- select mostrando a quais categorias cada item pertence:
+                    <select class="custom-select form-control" ng-model="contato.operadora" ng-options="operadora.nome group by operadora.categoria for operadora in operadoras">
+                    <option value="" disabled>Selecione uma operadora</option>
+                    </select>
+                -->
+                <button class="btn btn-primary btn-block" ng-click="addContato(contato)" ng-disabled="!contato.nome || !contato.telefone">Adicionar contato</button>
+                <!--botão para remover contatos com ng-disabled: 
+                <button class="btn btn-danger btn-block" ng-click="apagarContatos(arrayContatos)" ng-disabled="!isContatoSelecionado(arrayContatos)">Apagar contatos</button>
+                -->
+                <!--botão para remover contatos com ng-show:-->
+                <button class="btn btn-danger btn-block" ng-click="apagarContatos(arrayContatos)" ng-show="isContatoSelecionado(arrayContatos)">Apagar contatos</button>
+                
+                <!--botão para remover contatos com ng-if: 
+                <button class="btn btn-danger btn-block" ng-click="apagarContatos(arrayContatos)" ng-if="isContatoSelecionado(arrayContatos)">Apagar contatos</button>
+                -->
+            </div>
+        </div>
+        <div ng-include="'footer.html'"></div>
+
+        <script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
+    </body>
+</html>
