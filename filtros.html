@@ -34,9 +34,9 @@
             angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function($scope, $filter){
                 $scope.exemploBind = "Lista Telefonica";
                 $scope.arrayContatos = [
-                    {nome: $filter('uppercase')("Aryanne"), data: new Date(), telefone:"988567159", cor: 'blue'},
-                    {nome: "Rafael", data: new Date(), telefone: "997201853", cor: 'red'},
-                    {nome: "Cida", data: new Date(), telefone: "988121812", cor: 'pink'}
+                    {nome: $filter('uppercase')("Aryanne"), data: new Date(), telefone:"988567669", cor: 'blue'},
+                    {nome: "Rafael", data: new Date(), telefone: "997201823", cor: 'red'},
+                    {nome: "Cida", data: new Date(), telefone: "988125810", cor: 'pink'}
                 ];
 
                 $scope.operadoras  = [
@@ -79,7 +79,6 @@
     </head>
     <body ng-controller="listaTelefonicaCtrl">
         <!-- filtro Number com arredondamento-->
-        {{100.96 | number:1}}
         <div class="container">
             <div class="jumbotron">
                 <h2>{{exemploBind}}</h2> 
